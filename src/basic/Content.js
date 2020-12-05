@@ -1,8 +1,8 @@
 import { connectStyle } from 'native-base-shoutem-theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, ScrollView, Platform, View } from 'react-native';
-
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import variable from '../theme/variables/platform';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 import getStyle from '../utils/getStyle';
