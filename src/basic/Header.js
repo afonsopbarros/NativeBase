@@ -3,7 +3,7 @@
 import { connectStyle } from 'native-base-shoutem-theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { View, StatusBar, ViewPropTypes, SafeAreaView } from 'react-native';
+import { View, StatusBar, ViewPropTypes } from 'react-native';
 
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 import getStyle from '../utils/getStyle';
@@ -46,13 +46,13 @@ class Header extends Component {
           }
           translucent={transparent ? true : translucent}
         />
-        <SafeAreaView
+        <View
           style={{
             backgroundColor: getStyle(style).backgroundColor
           }}
-        >
-          <View ref={c => (this._root = c)} {...this.props} />
-        </SafeAreaView>
+          ref={c => (this._root = c)}
+          {...this.props}
+        />
       </View>
     );
   }

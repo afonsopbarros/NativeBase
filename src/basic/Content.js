@@ -1,13 +1,11 @@
 import { connectStyle } from 'native-base-shoutem-theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { KeyboardAvoidingView, ScrollView, Platform, View } from 'react-native';
 
 import variable from '../theme/variables/platform';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 import getStyle from '../utils/getStyle';
-import { View } from 'react-native';
 
 class Content extends Component {
   static contextTypes = {
@@ -34,6 +32,8 @@ class Content extends Component {
 
     const ScrollViewStyled = () => (
       <ScrollView
+        automaticallyAdjustContentInsets="false"
+        keyboardShouldPersistTaps="handled"
         {...this.props}
         contentContainerStyle={[
           { padding: padder ? variables.contentPadding : undefined },
