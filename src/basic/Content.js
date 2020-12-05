@@ -32,7 +32,6 @@ class Content extends Component {
 
     const ScrollViewStyled = () => (
       <ScrollView
-        automaticallyAdjustContentInsets="false"
         keyboardShouldPersistTaps="handled"
         {...this.props}
         contentContainerStyle={[
