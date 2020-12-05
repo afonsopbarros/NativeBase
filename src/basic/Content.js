@@ -1,8 +1,8 @@
 import { connectStyle } from 'native-base-shoutem-theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { SafeAreaView } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import variable from '../theme/variables/platform';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
@@ -17,10 +17,9 @@ class Content extends Component {
     const {
       children,
       contentContainerStyle,
-      disableKBDismissScroll,
-      keyboardShouldPersistTaps,
       padder,
-      style
+      style,
+      isKeyboardAvoiding
     } = this.props;
 
     const containerStyle = {
@@ -32,33 +31,38 @@ class Content extends Component {
       ? this.context.theme['@@shoutem.theme/themeStyle'].variables
       : variable;
 
+    const ScrollViewStyled = () => (
+      <ScrollView
+        {...this.props}
+        contentContainerStyle={[
+          { padding: padder ? variables.contentPadding : undefined },
+          contentContainerStyle
+        ]}
+      >
+        {children}
+      </ScrollView>
+    );
+
     return (
       <SafeAreaView style={containerStyle}>
-        <KeyboardAwareScrollView
-          automaticallyAdjustContentInsets={false}
-          resetScrollToCoords={disableKBDismissScroll ? null : { x: 0, y: 0 }}
-          keyboardShouldPersistTaps={keyboardShouldPersistTaps || 'handled'}
-          ref={c => {
-            this._scrollview = c;
-            this._root = c;
-          }}
-          {...this.props}
-          contentContainerStyle={[
-            { padding: padder ? variables.contentPadding : undefined },
-            contentContainerStyle
-          ]}
-        >
-          {children}
-        </KeyboardAwareScrollView>
+        {isKeyboardAvoiding ? (
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}
+          >
+            <ScrollViewStyled />
+          </KeyboardAvoidingView>
+        ) : (
+          <ScrollViewStyled />
+        )}
       </SafeAreaView>
     );
   }
 }
 
 Content.propTypes = {
-  disableKBDismissScroll: PropTypes.bool,
-  keyboardShouldPersistTaps: PropTypes.string,
   padder: PropTypes.bool,
+  isKeyboardAvoiding: PropTypes.bool,
   style: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
