@@ -5,12 +5,13 @@ import { connectStyle } from 'native-base-shoutem-theme';
 
 import { ViewPropTypes } from '../utils';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 class Container extends Component {
   render() {
     return (
       <View ref={c => (this._root = c)} {...this.props}>
-        {this.props.children}
+        <SafeAreaView>{this.props.children}</SafeAreaView>
       </View>
     );
   }

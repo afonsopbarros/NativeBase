@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import variable from '../theme/variables/platform';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 import getStyle from '../utils/getStyle';
+import { View } from 'react-native';
 
 class Content extends Component {
   static contextTypes = {
@@ -43,19 +44,17 @@ class Content extends Component {
       </ScrollView>
     );
 
-    return (
-      <SafeAreaView style={containerStyle}>
-        {isKeyboardAvoiding ? (
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={{ flex: 1 }}
-          >
-            <ScrollViewStyled />
-          </KeyboardAvoidingView>
-        ) : (
-          <ScrollViewStyled />
-        )}
-      </SafeAreaView>
+    return isKeyboardAvoiding ? (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={containerStyle}
+      >
+        <ScrollViewStyled />
+      </KeyboardAvoidingView>
+    ) : (
+      <View style={containerStyle}>
+        <ScrollViewStyled />
+      </View>
     );
   }
 }
