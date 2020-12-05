@@ -30,29 +30,34 @@ class Content extends Component {
       ? this.context.theme['@@shoutem.theme/themeStyle'].variables
       : variable;
 
-    const ScrollViewStyled = () => (
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        {...this.props}
-        contentContainerStyle={[
-          { padding: padder ? variables.contentPadding : undefined },
-          contentContainerStyle
-        ]}
-      >
-        {children}
-      </ScrollView>
-    );
-
     return isKeyboardAvoiding ? (
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={containerStyle}
       >
-        <ScrollViewStyled />
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          {...this.props}
+          contentContainerStyle={[
+            { padding: padder ? variables.contentPadding : undefined },
+            contentContainerStyle
+          ]}
+        >
+          {children}
+        </ScrollView>
       </KeyboardAvoidingView>
     ) : (
       <View style={containerStyle}>
-        <ScrollViewStyled />
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          {...this.props}
+          contentContainerStyle={[
+            { padding: padder ? variables.contentPadding : undefined },
+            contentContainerStyle
+          ]}
+        >
+          {children}
+        </ScrollView>
       </View>
     );
   }
