@@ -1,8 +1,8 @@
 import { connectStyle } from 'native-base-shoutem-theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, ScrollView } from 'react-native';
+
 import variable from '../theme/variables/platform';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 import getStyle from '../utils/getStyle';
@@ -18,7 +18,8 @@ class Content extends Component {
       contentContainerStyle,
       padder,
       style,
-      isKeyboardAvoiding
+      disableKBDismissScroll,
+      keyboardShouldPersistTaps
     } = this.props;
 
     const containerStyle = {
@@ -30,26 +31,16 @@ class Content extends Component {
       ? this.context.theme['@@shoutem.theme/themeStyle'].variables
       : variable;
 
-    return isKeyboardAvoiding ? (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={containerStyle}
-      >
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          {...this.props}
-          contentContainerStyle={[
-            { padding: padder ? variables.contentPadding : undefined },
-            contentContainerStyle
-          ]}
-        >
-          {children}
-        </ScrollView>
-      </KeyboardAvoidingView>
-    ) : (
+    return (
       <View style={containerStyle}>
         <ScrollView
-          keyboardShouldPersistTaps="handled"
+          automaticallyAdjustContentInsets={false}
+          resetScrollToCoords={disableKBDismissScroll ? null : { x: 0, y: 0 }}
+          keyboardShouldPersistTaps={keyboardShouldPersistTaps || 'handled'}
+          ref={c => {
+            this._scrollview = c;
+            this._root = c;
+          }}
           {...this.props}
           contentContainerStyle={[
             { padding: padder ? variables.contentPadding : undefined },

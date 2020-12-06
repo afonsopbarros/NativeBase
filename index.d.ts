@@ -183,7 +183,6 @@ declare module 'native-base' {
       scrollEnabled?: boolean;
       style?: RnViewStyleProp | Array<RnViewStyleProp>;
       contentContainerStyle?: RnViewStyleProp | Array<RnViewStyleProp>;
-      isKeyboardAvoiding?: boolean;
     }
     /**
      * see Widget Button.js
