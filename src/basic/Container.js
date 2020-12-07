@@ -4,11 +4,22 @@ import { connectStyle } from 'native-base-shoutem-theme';
 
 import { ViewPropTypes } from '../utils';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, KeyboardAvoidingView } from 'react-native';
+import { Platform } from 'react-native';
 
 class Container extends Component {
   render() {
-    return (
+    return Platform.OS === 'ios' ? (
+      <SafeAreaView
+        style={{ flex: 1 }}
+        ref={c => (this._root = c)}
+        {...this.props}
+      >
+        <KeyboardAvoidingView behavior={'padding'} style={{ flex: 1 }}>
+          {this.props.children}
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    ) : (
       <SafeAreaView
         style={{ flex: 1 }}
         ref={c => (this._root = c)}
