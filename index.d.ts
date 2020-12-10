@@ -167,6 +167,7 @@ declare module 'native-base' {
        */
       theme?: Object;
       style?: RnViewStyleProp | Array<RnViewStyleProp>;
+      noSafeArea?: boolean;
     }
     /**
      * see Widget Content.js
