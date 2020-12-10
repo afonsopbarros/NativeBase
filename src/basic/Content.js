@@ -1,8 +1,7 @@
 import { connectStyle } from 'native-base-shoutem-theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { SafeAreaView } from 'react-native';
-import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view';
+import { View, ScrollView } from 'react-native';
 
 import variable from '../theme/variables/platform';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
@@ -17,10 +16,10 @@ class Content extends Component {
     const {
       children,
       contentContainerStyle,
-      disableKBDismissScroll,
-      keyboardShouldPersistTaps,
       padder,
-      style
+      style,
+      disableKBDismissScroll,
+      keyboardShouldPersistTaps
     } = this.props;
 
     const containerStyle = {
@@ -33,8 +32,8 @@ class Content extends Component {
       : variable;
 
     return (
-      <SafeAreaView style={containerStyle}>
-        <KeyboardAwareScrollView
+      <View style={containerStyle}>
+        <ScrollView
           automaticallyAdjustContentInsets={false}
           resetScrollToCoords={disableKBDismissScroll ? null : { x: 0, y: 0 }}
           keyboardShouldPersistTaps={keyboardShouldPersistTaps || 'handled'}
@@ -49,16 +48,15 @@ class Content extends Component {
           ]}
         >
           {children}
-        </KeyboardAwareScrollView>
-      </SafeAreaView>
+        </ScrollView>
+      </View>
     );
   }
 }
 
 Content.propTypes = {
-  disableKBDismissScroll: PropTypes.bool,
-  keyboardShouldPersistTaps: PropTypes.string,
   padder: PropTypes.bool,
+  isKeyboardAvoiding: PropTypes.bool,
   style: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.number,
