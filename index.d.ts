@@ -1,8 +1,8 @@
-import { NativeSafeAreaViewProps } from 'react-native-safe-area-context';
-
 declare module 'native-base' {
   import * as React from 'react';
   import * as ReactNative from 'react-native';
+
+  import { NativeSafeAreaViewProps } from 'react-native-safe-area-context';
 
   type RnViewStyleProp = ReactNative.StyleProp<ReactNative.ViewStyle>;
   type RnTextStyleProp = ReactNative.StyleProp<ReactNative.TextStyle>;
