@@ -4,7 +4,8 @@ import { connectStyle } from 'native-base-shoutem-theme';
 
 import { ViewPropTypes } from '../utils';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
-import { SafeAreaView, KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Platform } from 'react-native';
 import { View } from 'react-native';
 
