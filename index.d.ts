@@ -24,27 +24,6 @@ declare module 'native-base' {
       padder?: boolean;
     }
 
-    interface Picker extends ReactNative.PickerProps, Testable {
-      mode?: 'dialog' | 'dropdown';
-      supportedOrientations?: 'portrait' | 'landscape';
-      iosHeader?: string;
-      inlineLabel?: boolean;
-      headerBackButtonText?: string;
-      placeholder?: string;
-      placeholderStyle?: RnTextStyleProp;
-      textStyle?: RnTextStyleProp;
-      style?: RnTextStyleProp;
-      iosIcon?: React.ReactElement<NativeBase.Icon>;
-      note?: boolean;
-      placeholderIconColor?: string;
-      itemTextStyle?: RnTextStyleProp;
-      headerStyle?: RnViewStyleProp;
-      headerTitleStyle?: RnTextStyleProp;
-      headerBackButtonTextStyle?: RnTextStyleProp;
-      modalStyle?: RnViewStyleProp;
-      renderHeader?: (backAction: any) => React.ReactElement<any>;
-    }
-
     interface H1 extends ReactNative.TextProps, Testable {}
     /**
      * see Widget Text.js
@@ -1046,16 +1025,6 @@ declare module 'native-base' {
    * NativeBase.Switch
    */
   export class Switch extends React.Component<NativeBase.Switch, any> {}
-  /**
-   * NativeBase.Picker
-   */
-  export class Picker extends React.Component<NativeBase.Picker, any> {}
-  namespace Picker {
-    export class Item extends React.Component<
-      ReactNative.PickerItemProps,
-      any
-    > {}
-  }
   /**
    * NativeBase.List
    *

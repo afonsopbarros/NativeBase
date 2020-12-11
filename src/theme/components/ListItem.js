@@ -2,7 +2,6 @@
 
 import { Platform, PixelRatio } from 'react-native';
 
-import pickerTheme from './Picker';
 import variable from './../variables/platform';
 import { PLATFORM } from './../variables/commonColor';
 
@@ -100,7 +99,9 @@ export default (variables /* : * */ = variable) => {
       paddingTop:
         platform === PLATFORM.IOS ? variables.listItemPadding + 25 : undefined,
       paddingBottom:
-        platform === PLATFORM.ANDROID ? variables.listItemPadding + 20 : undefined,
+        platform === PLATFORM.ANDROID
+          ? variables.listItemPadding + 20
+          : undefined,
       flexDirection: 'row',
       borderColor: variables.listBorderColor,
       'NativeBase.Text': {
@@ -169,14 +170,6 @@ export default (variables /* : * */ = variable) => {
     'NativeBase.Right': {
       'NativeBase.Badge': {
         alignSelf: null
-      },
-      'NativeBase.PickerNB': {
-        'NativeBase.Button': {
-          marginRight: -15,
-          'NativeBase.Text': {
-            color: variables.topTabBarActiveTextColor
-          }
-        }
       },
       'NativeBase.Button': {
         alignSelf: null,
@@ -397,9 +390,7 @@ export default (variables /* : * */ = variable) => {
           marginRight: Platform.OS === PLATFORM.IOS ? undefined : -5,
           alignSelf: null
         },
-        'NativeBase.PickerNB': {
-          ...pickerTheme()
-        },
+
         flexDirection: 'row',
         alignItems: 'center',
         flex: 0,
