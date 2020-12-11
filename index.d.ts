@@ -1,3 +1,5 @@
+import { NativeSafeAreaViewProps } from 'react-native-safe-area-context';
+
 declare module 'native-base' {
   import * as React from 'react';
   import * as ReactNative from 'react-native';
@@ -161,7 +163,7 @@ declare module 'native-base' {
     /**
      * see Widget Container.js
      */
-    interface Container extends Testable {
+    interface Container extends NativeSafeAreaViewProps, Testable {
       /**
        * The theme prop can be applied to any component of NativeBase.
        */
