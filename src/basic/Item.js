@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { isArray, remove } from 'lodash';
 import { connectStyle } from 'native-base-shoutem-theme';
+import { SafeAreaFrameContext } from 'react-native-safe-area-context';
 
 import variables from '../theme/variables/platform';
 import computeProps from '../utils/computeProps';
@@ -376,24 +377,28 @@ class Item extends Component {
       );
     } else if (this.props.stackedLabel && icon.length) {
       newChildren.push(
-        <View
-          key="s"
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            width: variables.deviceWidth - 15
-          }}
-        >
-          <Icon key="s1" {...iconProps} />
-          <View style={{ flexDirection: 'column' }}>
-            <Label key="s2" {...labelProps} />
-            <Input
-              key="s3"
-              {...inputProps}
-              style={{ width: variables.deviceWidth - 40 }}
-            />
-          </View>
-        </View>
+        <SafeAreaFrameContext.Consumer>
+          {frame => (
+            <View
+              key="s"
+              style={{
+                flexDirection: 'row',
+                flex: 1,
+                width: frame.width - 15
+              }}
+            >
+              <Icon key="s1" {...iconProps} />
+              <View style={{ flexDirection: 'column' }}>
+                <Label key="s2" {...labelProps} />
+                <Input
+                  key="s3"
+                  {...inputProps}
+                  style={{ width: frame.width - 40 }}
+                />
+              </View>
+            </View>
+          )}
+        </SafeAreaFrameContext.Consumer>
       );
     } else {
       return this.props.children;
