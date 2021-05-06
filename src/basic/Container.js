@@ -50,6 +50,7 @@ class Container extends Component {
       <SafeAreaFrameContext.Consumer>
         {frame => (
           <SafeAreaView
+            edges={['right', 'left', 'top']}
             style={{
               flex: 1,
               height: Platform.OS === 'ios' ? frame.height : frame.height - 20
@@ -67,6 +68,7 @@ class Container extends Component {
       <SafeAreaFrameContext.Consumer>
         {frame => (
           <SafeAreaView
+            edges={['right', 'left', 'top']}
             style={{
               flex: 1,
               height: Platform.OS === 'ios' ? frame.height : frame.height - 20
