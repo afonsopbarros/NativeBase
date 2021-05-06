@@ -149,6 +149,7 @@ declare module 'native-base' {
       theme?: Object;
       style?: RnViewStyleProp | Array<RnViewStyleProp>;
       noSafeArea?: boolean;
+      hasBottomTabBar?: boolean;
     }
     /**
      * see Widget Content.js
