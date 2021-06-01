@@ -3,10 +3,8 @@ import {
   KeyboardAvoidingView,
   View,
   Platform,
-  useState,
-  Dimensions,
-  useEffect,
-  Keyboard
+  Keyboard,
+  Dimensions
 } from 'react-native';
 import {
   SafeAreaView,
@@ -18,27 +16,27 @@ import { connectStyle } from 'native-base-shoutem-theme';
 import { ViewPropTypes } from '../utils';
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
 
-const useIsFloatingKeyboard = () => {
-  const [isFloating, setFloating] = useState(false);
-  const windowWidth = Dimensions.get('window').width;
-  const onKeyboardWillChangeFrame = event => {
-    setFloating(event.endCoordinates.width !== windowWidth);
-  };
-
-  useEffect(() => {
-    Keyboard.addListener('keyboardWillChangeFrame', onKeyboardWillChangeFrame);
-    return () => {
-      Keyboard.removeListener(
-        'keyboardWillChangeFrame',
-        onKeyboardWillChangeFrame
-      );
-    };
-  }, []);
-
-  return isFloating;
-};
-
 class Container extends Component {
+  state = {
+    keyboardFloating: false
+  };
+  componentDidMount() {
+    this.keyboardWillChangeFrameListener = Keyboard.addListener(
+      'keyboardWillChangeFrame',
+      this._onKeyboardWillChangeFrame
+    );
+  }
+
+  componentWillUnmount() {
+    this.keyboardWillChangeFrameListener.remove();
+  }
+
+  _onKeyboardWillChangeFrame = event => {
+    const windowWidth = Dimensions.get('window').width;
+    this.setState({
+      keyboardFloating: event.endCoordinates.width !== windowWidth
+    });
+  };
   render() {
     if (this.props.noSafeArea) {
       return Platform.OS === 'ios' ? (
@@ -46,6 +44,7 @@ class Container extends Component {
           {frame => (
             <KeyboardAvoidingView
               behavior={'padding'}
+              enabled={!this.state.keyboardFloating}
               style={{
                 flex: 1,
                 height: Platform.OS === 'ios' ? frame.height : frame.height - 20
@@ -78,19 +77,23 @@ class Container extends Component {
       <SafeAreaFrameContext.Consumer>
         {frame => (
           <SafeAreaView
+            style={{
+              flex: 1,
+              height: Platform.OS === 'ios' ? frame.height : frame.height - 20
+            }}
             edges={
               this.props.hasBottomTabBar
                 ? ['right', 'left', 'top']
                 : ['bottom', 'left', 'right', 'top']
             }
-            style={{
-              flex: 1,
-              height: Platform.OS === 'ios' ? frame.height : frame.height - 20
-            }}
             ref={c => (this._root = c)}
             {...this.props}
           >
-            <KeyboardAvoidingView behavior={'padding'} style={{ flex: 1 }}>
+            <KeyboardAvoidingView
+              enabled={!this.state.keyboardFloating}
+              behavior={'padding'}
+              style={{ flex: 1 }}
+            >
               {this.props.children}
             </KeyboardAvoidingView>
           </SafeAreaView>
@@ -127,7 +130,8 @@ Container.propTypes = {
     PropTypes.number,
     PropTypes.array
   ]),
-  noSafeArea: PropTypes.bool
+  noSafeArea: PropTypes.bool,
+  hasBottomTabBar: PropTypes.bool
 };
 
 const StyledContainer = connectStyle(
