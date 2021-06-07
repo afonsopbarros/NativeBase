@@ -41,13 +41,12 @@ class Container extends Component {
     if (this.props.noSafeArea) {
       return Platform.OS === 'ios' ? (
         <SafeAreaFrameContext.Consumer>
-          {frame => (
+          {() => (
             <KeyboardAvoidingView
               behavior={'padding'}
               enabled={!this.state.keyboardFloating}
               style={{
-                flex: 1,
-                height: Platform.OS === 'ios' ? frame.height : frame.height - 20
+                flex: 1
               }}
               ref={c => (this._root = c)}
               {...this.props}
@@ -58,11 +57,10 @@ class Container extends Component {
         </SafeAreaFrameContext.Consumer>
       ) : (
         <SafeAreaFrameContext.Consumer>
-          {frame => (
+          {() => (
             <View
               style={{
-                flex: 1,
-                height: Platform.OS === 'ios' ? frame.height : frame.height - 20
+                flex: 1
               }}
               ref={c => (this._root = c)}
               {...this.props}
@@ -75,11 +73,10 @@ class Container extends Component {
     }
     return Platform.OS === 'ios' ? (
       <SafeAreaFrameContext.Consumer>
-        {frame => (
+        {() => (
           <SafeAreaView
             style={{
-              flex: 1,
-              height: Platform.OS === 'ios' ? frame.height : frame.height - 20
+              flex: 1
             }}
             edges={
               this.props.hasBottomTabBar
@@ -101,7 +98,7 @@ class Container extends Component {
       </SafeAreaFrameContext.Consumer>
     ) : (
       <SafeAreaFrameContext.Consumer>
-        {frame => (
+        {() => (
           <SafeAreaView
             edges={
               this.props.hasBottomTabBar
@@ -109,8 +106,7 @@ class Container extends Component {
                 : ['bottom', 'left', 'right', 'top']
             }
             style={{
-              flex: 1,
-              height: Platform.OS === 'ios' ? frame.height : frame.height - 20
+              flex: 1
             }}
             ref={c => (this._root = c)}
             {...this.props}
