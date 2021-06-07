@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import {
   KeyboardAvoidingView,
-  View,
   Platform,
   Keyboard,
   Dimensions
 } from 'react-native';
-import {
-  SafeAreaView,
-  SafeAreaFrameContext
-} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import PropTypes from 'prop-types';
 import { connectStyle } from 'native-base-shoutem-theme';
 
@@ -40,85 +36,69 @@ class Container extends Component {
   render() {
     if (this.props.noSafeArea) {
       return Platform.OS === 'ios' ? (
-        <SafeAreaFrameContext.Consumer>
-          {frame => (
-            <KeyboardAvoidingView
-              behavior={'padding'}
-              enabled={!this.state.keyboardFloating}
-              style={{
-                flex: 1,
-                height: Platform.OS === 'ios' ? frame.height : frame.height - 20
-              }}
-              ref={c => (this._root = c)}
-              {...this.props}
-            >
-              {this.props.children}
-            </KeyboardAvoidingView>
-          )}
-        </SafeAreaFrameContext.Consumer>
+        <KeyboardAvoidingView
+          behavior={'padding'}
+          enabled={!this.state.keyboardFloating}
+          style={{
+            flex: 1
+          }}
+          ref={c => (this._root = c)}
+          {...this.props}
+        >
+          {this.props.children}
+        </KeyboardAvoidingView>
       ) : (
-        <SafeAreaFrameContext.Consumer>
-          {frame => (
-            <View
-              style={{
-                flex: 1,
-                height: Platform.OS === 'ios' ? frame.height : frame.height - 20
-              }}
-              ref={c => (this._root = c)}
-              {...this.props}
-            >
-              {this.props.children}
-            </View>
-          )}
-        </SafeAreaFrameContext.Consumer>
+        <KeyboardAvoidingView
+          behavior={'padding'}
+          enabled={!this.state.keyboardFloating}
+          style={{
+            flex: 1
+          }}
+          ref={c => (this._root = c)}
+          {...this.props}
+        >
+          {this.props.children}
+        </KeyboardAvoidingView>
       );
     }
     return Platform.OS === 'ios' ? (
-      <SafeAreaFrameContext.Consumer>
-        {frame => (
-          <SafeAreaView
-            style={{
-              flex: 1,
-              height: Platform.OS === 'ios' ? frame.height : frame.height - 20
-            }}
-            edges={
-              this.props.hasBottomTabBar
-                ? ['right', 'left', 'top']
-                : ['bottom', 'left', 'right', 'top']
-            }
-            ref={c => (this._root = c)}
-            {...this.props}
-          >
-            <KeyboardAvoidingView
-              enabled={!this.state.keyboardFloating}
-              behavior={'padding'}
-              style={{ flex: 1 }}
-            >
-              {this.props.children}
-            </KeyboardAvoidingView>
-          </SafeAreaView>
-        )}
-      </SafeAreaFrameContext.Consumer>
+      <SafeAreaView
+        style={{
+          flex: 1
+        }}
+        edges={
+          this.props.hasBottomTabBar
+            ? ['right', 'left', 'top']
+            : ['bottom', 'left', 'right', 'top']
+        }
+        ref={c => (this._root = c)}
+        {...this.props}
+      >
+        <KeyboardAvoidingView
+          enabled={!this.state.keyboardFloating}
+          behavior={'padding'}
+          style={{ flex: 1 }}
+        >
+          {this.props.children}
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     ) : (
-      <SafeAreaFrameContext.Consumer>
-        {frame => (
-          <SafeAreaView
-            edges={
-              this.props.hasBottomTabBar
-                ? ['right', 'left', 'top']
-                : ['bottom', 'left', 'right', 'top']
-            }
-            style={{
-              flex: 1,
-              height: Platform.OS === 'ios' ? frame.height : frame.height - 20
-            }}
-            ref={c => (this._root = c)}
-            {...this.props}
-          >
-            {this.props.children}
-          </SafeAreaView>
-        )}
-      </SafeAreaFrameContext.Consumer>
+      <SafeAreaView
+        edges={
+          this.props.hasBottomTabBar
+            ? ['right', 'left', 'top']
+            : ['bottom', 'left', 'right', 'top']
+        }
+        style={{
+          flex: 1
+        }}
+        ref={c => (this._root = c)}
+        {...this.props}
+      >
+        <KeyboardAvoidingView behavior={'height'} style={{ flex: 1 }}>
+          {this.props.children}
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 }
